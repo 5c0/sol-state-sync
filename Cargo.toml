@@ -1,0 +1,37 @@
+[package]
+name = "sol-state-sync"
+version = "0.1.0"
+edition = "2021"
+authors = ["Jonathan Tropp <admin@5c0.io>"]
+description = "A high-concurrency, low-latency Solana account state-synchronizer for DEX orderbooks."
+
+[lib]
+name = "sol_state"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+# Solana Internals
+solana-sdk = "1.18"
+solana-client = "1.18"
+anchor-lang = "0.29" # For high-level Borsh/Program Account handling
+borsh = "0.10"       # Fast deserialization of raw account data
+
+# Async & Concurrency
+tokio = { version = "1", features = ["full"] }
+tokio-tungstenite = { version = "0.21", features = ["native-tls"] }
+futures-util = "0.3"
+dashmap = "5.5" # Concurrent Hash Map for high-speed state
+parking_lot = "0.12"
+
+# Data Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+base64 = "0.21"
+thiserror = "1.0" # Professional Error Handling
+tracing = "0.1"   # High-performance diagnostics
+
+# Python FFI
+pyo3 = { version = "0.20", features = ["extension-module"] }
+
+[dev-dependencies]
+criterion = "0.5" # Micro-benchmarking
